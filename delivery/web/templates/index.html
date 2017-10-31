@@ -1,0 +1,54 @@
+{% extends "template.html"%}
+{% load staticfiles %}
+
+{% block content %}
+{% if notFind == True %}
+<div class="row">
+	<div class="alert alert-danger alert-dismissable fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    متاسفانه موردی یافت نشد
+  </div>
+</div>
+{% endif %}
+
+
+{% endblock %}
+
+
+
+{% block footer %}
+
+<script >
+$(document).ready(function () {
+        $(".subtaskinput").fadeOut(0);
+        $('.fa-square-o').hover(function () {
+            $(this).addClass('fa-check-square-o');
+            $(this).removeClass('fa-square-o');
+        }, function () {
+            $(this).addClass('fa-square-o');
+            $(this).removeClass('fa-check-square-o');
+        });
+
+});
+
+function showsubtaskinput(elementid){
+  if ($('.btn-'+elementid).text() == '+') {
+    $('.subtask-'+elementid).fadeIn(250);
+    $('.subtask-'+elementid).focus();
+    $('.btn-'+elementid).text ('-');
+  }
+  else {
+    $('.subtask-'+elementid).fadeOut(250);
+    $('.btn-'+elementid).text ('+');
+  }
+  // دگمه رو عوض کنیم به منفی و اگر منفی رو زد المنت رو حذف کنیم
+  return 0;
+}
+</script>
+
+<script type="text/javascript">
+$(".alert").fadeTo(10000, 500).slideUp(500, function(){
+    $(".alert").slideUp(10000);
+});
+</script>
+{% endblock %}

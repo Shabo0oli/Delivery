@@ -1,0 +1,202 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html  class="no-js" lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <title>پنل مدیریت دانش آموز</title>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-rtl.css' %}" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"  crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+
+<link href="/static/admin/css/calendar-green.css" type="text/css" media="all" rel="stylesheet" />
+
+
+<script type="text/javascript" src="{% static 'js/118.js' %}"></script>
+<script type="text/javascript" src="/admin/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/jalalijscalendar/jalali.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/jalalijscalendar/calendar.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/jalalijscalendar/calendar-setup.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/jalalijscalendar/calendar-fa.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/jDateTimeShortcuts.js"></script>
+
+
+    <!-- Latest compiled and minified CSS -->
+
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
+  </head>
+
+  <body>
+
+
+
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top rtl" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header navbar-right">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="{% url 'index' %}">			                
+                     پنل ورود
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-left">
+                    {% if user.is_authenticated %}
+                    <li> <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
+                    {% else %}
+                    <li><a href="{% url 'register' %}">ثبت نام</a></li><li><a href="{% url 'login' %}">ورود</a></li>
+                    <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->
+                    {% endif %}
+                  </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+{% if user.is_authenticated %}
+<div class="nav-side-menu">
+    <div class="brand">فهرست</div>
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+        <div class="menu-list">
+
+            <ul id="menu-content" class="menu-content collapse out">
+                <li>
+                  <a href="#">
+                  <i class="fa fa-dashboard fa-lg"></i> آمار و گزارشات
+                  </a>
+                </li>
+
+
+                <li>
+                  <a href="#">
+                  <i class="fa fa-bar-chart fa-lg"></i> گزارش روزانه
+                  </a>
+                </li>
+
+
+                <li  data-toggle="collapse" data-target="#products" class="collapsed active">
+                  <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li class="active"><a href="#">CSS3 Animation</a></li>
+                    <li><a href="#">General</a></li>
+                    <li><a href="#">Buttons</a></li>
+                    <li><a href="#">Tabs & Accordions</a></li>
+                    <li><a href="#">Typography</a></li>
+                    <li><a href="#">FontAwesome</a></li>
+                    <li><a href="#">Slider</a></li>
+                    <li><a href="#">Panels</a></li>
+                    <li><a href="#">Widgets</a></li>
+                    <li><a href="#">Bootstrap Model</a></li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                  <a href="#"><i class="fa fa-globe fa-lg"></i> Services <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="service">
+                  <li>New Service 1</li>
+                  <li>New Service 2</li>
+                  <li>New Service 3</li>
+                </ul>
+
+
+                <li data-toggle="collapse" data-target="#new" class="collapsed">
+                  <a href="#"><i class="fa fa-car fa-lg"></i> New <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="new">
+                  <li>New New 1</li>
+                  <li>New New 2</li>
+                  <li>New New 3</li>
+                </ul>
+
+
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-user fa-lg"></i> Profile
+                  </a>
+                  </li>
+
+                 <li>
+                  <a href="#">
+                  <i class="fa fa-users fa-lg"></i> Users
+                  </a>
+                </li>
+            </ul>
+     </div>
+</div>
+{% endif %}
+        <!-- Page Content -->
+
+         {% block content %}
+
+
+
+          {% endblock %}
+
+
+
+        <footer class="footer">
+
+        </footer>
+        <!-- /.container -->
+
+        <!-- jQuery -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+        <script src="{% static 'js/awesome.js' %}"></script>
+
+
+        {% block footer %}
+
+        {% endblock %}
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+          ga('create', 'UA-86661525-2', 'auto');
+          ga('send', 'pageview');
+        </script>
+      </body>
+    </html>
