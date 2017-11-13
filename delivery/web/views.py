@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from .models import *
 
 # Create your views here.
@@ -65,6 +66,33 @@ def register(request):
         context['message'] = 'لطفا فیلد های فرم را به درستی پر کنید'
         return render(request, 'register.html', context)
 
+def registerSeller(request):
+    if 'username' in request.POST and 'password' in request.POST and 'email' in request.POST:
+        if User.objects.filter(email=request.POST['email']).exists() or User.objects.filter(username=request.POST['username']).exists():
+            context = {}
+            context['message']='مشخصات وارد شده تکراری میباشد'
+            return render(request, 'registerSeller.html', context)
+        else:
+
+            group = Group.objects.get(name='Seller')
+            username = request.POST['username']
+            password = request.POST['password']
+            #phone = request.POST['phone']
+            email = request.POST['email']
+            name = request.POST['name']
+            #family = request.POST['family']
+            user = User.objects.create_user(username, email, password)
+            user.groups.add(group)
+            user.save()
+            student = Client(Username=user, Name=name)
+            student.save()
+            context={}
+            context['message'] = 'ثبت نام شما با موفقیت انجام شد.پس از تایید میتوانید در سیستم وارد شوید'
+            return render(request, 'login.html', context)
+    else:
+        context = {}
+        context['message'] = 'لطفا فیلد های فرم را به درستی پر کنید'
+        return render(request, 'registerSeller.html', context)
 
 def logout_view(request):
     logout(request)
