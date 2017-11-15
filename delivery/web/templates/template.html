@@ -71,6 +71,19 @@
                      پنل ورود
                     </a>
                 </div>
+                {% if user.is_authenticated %}
+                 <div class="col-sm-4 col-md-4 pull-right" style="margin-right: 25%;">
+		            <form method="post" action="/search/" class="navbar-form" role="search">
+                        {% csrf_token %}
+		                <div class="input-group">
+			                <input type="text" class="form-control" placeholder="جستجو محصول" name="srchterm" id="srchterm">
+			                <div class="input-group-btn">
+				                <button class="btn btn-default" type="submit">       جستجو       <i class="fa fa-search" aria-hidden="true"></i></button>
+			                </div>
+	                	</div>
+		            </form>
+		        </div>
+                {% endif %}
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-left">

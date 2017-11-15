@@ -11,6 +11,7 @@ from .models import *
 def index(request):
     context = {}
     if request.user.is_authenticated():
+        context['products'] = Product.objects.all()
         return render(request, 'index.html', context)
     else :
         return login_view(request)
@@ -23,14 +24,22 @@ def login_view(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            st = Client.objects.filter(Username=user)[0]
-            login(request, user)
-            student = Client.objects.filter(Username=user)
-            context = {}
-            #context['avatar'] = usrInfo[0].Avatar.url[4:]
-            #request.session['studentAvatar'] = student[0].Avatar.url[4:]
-            #request.session['user'] = user.username
-            return render(request, 'index.html', context)
+            users_in_group = Group.objects.get(name="Seller").user_set.all()
+            if user in users_in_group :
+                login(request, user)
+                context = {}
+                context['categories'] = Category.objects.all()
+                return render(request, 'panel.html', context)
+            else:
+                login(request, user)
+                st = Client.objects.filter(Username=user)[0]
+                student = Client.objects.filter(Username=user)
+                context = {}
+                #context['avatar'] = usrInfo[0].Avatar.url[4:]
+                #request.session['studentAvatar'] = student[0].Avatar.url[4:]
+                request.session['user'] = user.username
+                context['products'] = Product.objects.all()
+                return render(request, 'index.html', context)
         else:
             context = {}
             context['message'] ='نام کاربری یا پسورد وارد شده اشتباه میباشد'
@@ -93,6 +102,33 @@ def registerSeller(request):
         context = {}
         context['message'] = 'لطفا فیلد های فرم را به درستی پر کنید'
         return render(request, 'registerSeller.html', context)
+
+
+def addproduct(request):
+    context = {}
+    if 'productname' in request.POST and 'category' in request.POST and 'price' in request.POST and 'stock' in request.POST :
+        productname = request.POST['productname']
+        cat = request.POST['category']
+        price = request.POST['price']
+        stock = request.POST['stock']
+        category = Category.objects.filter(Name=cat)[0]
+        newproduct = Product(Name=productname, Price=price, Category=category, Stock=stock)
+        newproduct.save()
+        context['message']='محصول جدید با موفقیت اضافه شد'
+    else :
+        context['message'] = 'مشخصات را به درستی وارد کنید'
+    context['categories'] = Category.objects.all()
+    return render(request, 'panel.html', context)
+
+
+def search(request):
+    context = {}
+    req = request.POST.get('srchterm', False)
+    result = Product.objects.filter(Name__contains=req)
+    if not result:
+        context['notFind'] = True
+    context['products'] = result
+    return render(request, 'index.html', context)
 
 def logout_view(request):
     logout(request)

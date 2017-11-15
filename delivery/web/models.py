@@ -16,15 +16,17 @@ class Client(models.Model):
 class Category(models.Model):
     Name = models.CharField(max_length=30, blank=True)
     Detail = models.TextField(max_length=200)
-
+    def __str__(self):
+        return "{}".format(self.Name)
 
 class Product(models.Model):
     Name = models.CharField(max_length=30, blank=True)
-    Family = models.CharField(max_length=30, blank=True)
     Price = models.IntegerField(default=0)
     Stock = models.IntegerField(default=0)
     Detail = models.TextField(max_length=200)
     Category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    def __str__(self):
+        return "{}".format(self.Name)
 
 
 class Payment(models.Model):
@@ -33,14 +35,16 @@ class Payment(models.Model):
     Amount = models.IntegerField(default=0)
     Payer = models.ForeignKey(User,on_delete=models.CASCADE)
 
-class Basket(models.Model):
-    BasketId = models.IntegerField(auto_created=True)
-
-
-class PeoductOfBasket(models.Model):
+class ProductOfBasket(models.Model):
     Quantity = models.IntegerField(default=0)
-    Basket = models.ForeignKey(Basket,on_delete=models.CASCADE)
     Product = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+class Basket(models.Model):
+    ProductList = models.ManyToManyField(ProductOfBasket)
+    Owner = models.ForeignKey(User , on_delete=models.DO_NOTHING)
+
+
+
 
 
 

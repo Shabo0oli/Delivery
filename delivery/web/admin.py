@@ -4,7 +4,7 @@ from .models import *
 # Register your models here.
 admin.site.register(Client)
 admin.site.register(Basket)
-admin.site.register(PeoductOfBasket)
+admin.site.register(ProductOfBasket)
 admin.site.register(Product)
 admin.site.register(Comment)
 admin.site.register(Order)
