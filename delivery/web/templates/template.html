@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/bootstrap-rtl.css' %}" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}"  crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}" >
 
 <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
 
@@ -88,7 +88,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-left">
                     {% if user.is_authenticated %}
-                    <li> <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
+                    <li><li><a href="{% url 'showbasket' %}">سبد خرید</a></li> <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
                     {% else %}
                     <li><a href="{% url 'register' %}">ثبت نام</a></li><li><a href="{% url 'login' %}">ورود</a></li>
                     <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->

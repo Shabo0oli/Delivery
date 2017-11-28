@@ -38,11 +38,14 @@ class Payment(models.Model):
 class ProductOfBasket(models.Model):
     Quantity = models.IntegerField(default=0)
     Product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    def __str__(self):
+        return "{} {}".format(self.Quantity , self.Product.Name)
 
 class Basket(models.Model):
     ProductList = models.ManyToManyField(ProductOfBasket)
     Owner = models.ForeignKey(User , on_delete=models.DO_NOTHING)
-
+    def __str__(self):
+        return "{}".format(self.Owner)
 
 
 

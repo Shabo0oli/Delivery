@@ -67,6 +67,8 @@ def register(request):
             user.save()
             student = Client(Username=user, Name=name, Family=family)
             student.save()
+            basket = Basket(Owner=user)
+            basket.save()
             context={}
             context['message'] = 'ثبت نام شما با موفقیت انجام شد.پس از تایید میتوانید در سیستم وارد شوید'
             return render(request, 'login.html', context)
@@ -134,3 +136,30 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+
+def addtobasket(request , productid):
+    context = {}
+    basket = Basket.objects.filter(Owner=request.user)[0]
+    list = basket.ProductList.all()
+    mark = 0
+    for p in list :
+        if int(p.Product.id) == int(productid) :
+            p.Quantity = p.Quantity+1
+            p.save()
+            mark = 1
+    if mark == 0 :
+        newProduct = ProductOfBasket(Quantity=1, Product=Product.objects.get(id=productid))
+        newProduct.save()
+        basket.ProductList.add(newProduct)
+        basket.save()
+
+
+    context['products'] = Product.objects.all()
+    return render(request, 'index.html', context)
+
+def showbasket(request):
+    context = {}
+    basket = Basket.objects.filter(Owner=request.user)[0]
+    list = basket.ProductList.all()
+    context['basket'] = list
+    return  render(request , 'showbasket.html' , context)

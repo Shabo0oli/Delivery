@@ -13,36 +13,22 @@
 
 <div class="row">
   <div class="col-md-12">
-{% for product in products %}
-    <div class="col-sm-6 col-md-4">
-				<div class="thumbnail" >
-					<h4 class="text-center"><span class="label label-info">{{product.Name}}</span></h4>
-					<img src="http://localhost:8009/static/defaultFood.png" class="img-responsive product-image">
-					<div class="caption">
-						<div class="row">
-							<div class="col-md-6 col-xs-6">
-								<h3>{{ product.Price }} تومان</h3>
-							</div>
-							<div class="col-md-6 col-xs-6 price">
-								<h3>
-								<label></label></h3>
-							</div>
-						</div>
-						<p>تعداد : {{ product.Stock }}</p>
-						<div class="row">
-							<div class="col-md-6">
-                                <a href="http://localhost:8009/addtobasket/{{ product.id }}/" class="btn btn-success btn-product"><i class="fa fa-shopping-basket fa-lg" aria-hidden="true"></i>  اضافه به سبد خرید</a></div>
-                        </div>
-						   <div class="row">
-						      <div class="col-md-6">
-								<a href="http://localhost:8009/place/{{ product.id }}/" class="btn btn-info btn-product"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>  توضیحات ببشتر  </a></div>
-                        </div>
-
-						<p> </p>
-					</div>
-				</div>
-			</div>
+      <table class="table table-hover">
+        <thead>
+            <tr>
+        <th>نام کالا</th>
+        <th>تعداد</th>
+            </tr>
+        </thead>
+    <tbody>
+{% for product in basket %}
+<tr>
+    <td> {{product.Product.Name}}</td>
+    <td> {{product.Quantity}} </td>
+</tr>
 {% endfor %}
+    </tbody>
+      </table>
   </div>
 </div>
 
