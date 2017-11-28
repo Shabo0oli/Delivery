@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^accounts/registerSeller/?$', views.registerSeller, name='registerSeller'),
     url(r'^accounts/addproduct/?$', views.addproduct, name='addproduct'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^checkout/$', views.checkout, name='checkout'),
     url(r'^showbasket/$', views.showbasket, name='showbasket'),
     url(r'^addtobasket/([0-9]*)/$', views.addtobasket, name='addtobasket'),
     url(r'^accounts/login/?$', views.login_view, name='login'),

@@ -139,7 +139,7 @@ def logout_view(request):
 
 def addtobasket(request , productid):
     context = {}
-    basket = Basket.objects.filter(Owner=request.user)[0]
+    basket = Basket.objects.filter(Owner=request.user , Checkout=False)[0]
     list = basket.ProductList.all()
     mark = 0
     for p in list :
@@ -159,7 +159,27 @@ def addtobasket(request , productid):
 
 def showbasket(request):
     context = {}
-    basket = Basket.objects.filter(Owner=request.user)[0]
+    basket = Basket.objects.filter(Owner=request.user , Checkout=False)[0]
     list = basket.ProductList.all()
+    phi = 0
+    for p in list :
+        phi+= int(p.Product.Price) * int( p.Quantity )
+    context['phi'] = str(phi)
     context['basket'] = list
     return  render(request , 'showbasket.html' , context)
+
+
+def checkout(request) :
+    context={}
+    basket = Basket.objects.filter(Owner=request.user, Checkout=False)[0]
+    list = basket.ProductList.all()
+    phi = 0
+    for p in list:
+        phi += int(p.Product.Price) * int(p.Quantity)
+    order = Order(Status='ثبت سفارش' , TotalPrice=phi , User=request.user , Basket=basket)
+    order.save()
+    basket.Checkout = True;
+    basket.save()
+    newbasket = Basket(Owner=request.user)
+    newbasket.save()
+    return render(request, 'showbasket.html', context)

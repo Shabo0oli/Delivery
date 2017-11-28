@@ -44,6 +44,7 @@ class ProductOfBasket(models.Model):
 class Basket(models.Model):
     ProductList = models.ManyToManyField(ProductOfBasket)
     Owner = models.ForeignKey(User , on_delete=models.DO_NOTHING)
+    Checkout = models.BooleanField(default=False)
     def __str__(self):
         return "{}".format(self.Owner)
 
