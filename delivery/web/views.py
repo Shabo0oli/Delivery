@@ -183,3 +183,16 @@ def checkout(request) :
     newbasket = Basket(Owner=request.user)
     newbasket.save()
     return render(request, 'showbasket.html', context)
+
+
+def show_detail(request, productid):
+    context = {}
+    try:
+        p = Product.objects.get(id=int(productid))
+        context['product'] = p
+
+        co_list = Comment.objects.filter(Product_id=p.id)
+        context['comments'] = co_list
+    except:
+        print(sys.exc_info())
+    return render(request, 'showdetail.html', context)
