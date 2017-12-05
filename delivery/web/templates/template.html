@@ -46,6 +46,45 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
+      <style>
+
+.container1 {
+  position: relative;
+  width: 100%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+          .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #CD5C5C;
+}
+
+.container1:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+      </style>
 
   </head>
 
@@ -72,7 +111,7 @@
                     </a>
                 </div>
                 {% if user.is_authenticated %}
-                 <div class="col-sm-4 col-md-4 pull-right" style="margin-right: 25%;">
+                 <div class="col-sm-3 col-md-3 pull-right" style="margin-right: 25%;">
 		            <form method="post" action="/search/" class="navbar-form" role="search">
                         {% csrf_token %}
 		                <div class="input-group">
@@ -88,7 +127,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-left">
                     {% if user.is_authenticated %}
-                    <li><li><a href="{% url 'showbasket' %}">سبد خرید</a></li> <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
+                    <li>  <li><a href="{% url 'mypreorder' %}">پیش سفارشات من</a></li>  <li><a href="{% url 'myorder' %}">سفارشات من</a></li>  <li><a href="{% url 'showbasket' %}">سبد خرید</a></li> <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
                     {% else %}
                     <li><a href="{% url 'register' %}">ثبت نام</a></li><li><a href="{% url 'login' %}">ورود</a></li>
                     <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->

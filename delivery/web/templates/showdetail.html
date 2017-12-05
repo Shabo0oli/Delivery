@@ -10,10 +10,11 @@
         <h3 class="panel-title">توضیحات</h3>
       </div>
       <div class="panel-body">
-        <form class="form-horizontal" method="POST" action="{% url 'login' %}">
+        <form class="form-horizontal" method="POST" action="{% url 'add_comment' %}">
           {% csrf_token %}
           <input type="hidden" name="dologin" value="true" />
           <input type="hidden" name="next" value="{{ next }}" />
+             <input type="hidden" name="product_id" value="{{ product.id }}" />
           
           <div class="form-group">
             <label for="username" class="col-sm-2 control-label">نام</label>
@@ -43,29 +44,31 @@
             </div>
           </div>
 
-          <ul>
-          	<li>
-          		نظرات :‌
-          	</li>
-          	<li>
-          		<ul>
           		{% for cur in comments %}
-          			<li>
-          			{{ cur.Text }}
-          			</li>
+          			    <div class="col-sm-8">
+                            <div class="panel panel-white post panel-shadow">
+                <div class="post-heading">
+                    <div class="pull-right meta">
+                        <div class="title h5">
+                            <a href="#"><b>{{ cur.Author.username }}</b></a>
+
+                        </div>
+                        <h6 class="text-muted time">{{ cur.CreationDate }}</h6>
+                    </div>
+                </div>
+                <div class="post-description">
+                    <p>{{ cur.Text }}</p>
+
+                </div>
+            </div>
+        </div>
           		{% endfor %}
-          		</ul>
-          	</li>
-          	<li>
-          		نظر دهید
-          		<textarea name="comment_text" rows="10">
-          			
-          		</textarea>
-          	</li>
-          </ul>
 
 
-
+    <div class="form-group">
+        <textarea class="form-control" id="textcomment" rows="3" name="comment_text" placeholder="نظر شما . . ."></textarea>
+        <input id="submit" name="submit" type="submit" value="ارسال نظر" class="btn btn-primary">
+    </div>
         </form>
         
       </div>

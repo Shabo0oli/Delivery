@@ -31,6 +31,11 @@
                   </a>
                 </li>
 
+                <li>
+                  <a onclick="showcard('3')">
+                  <i class="fa fa-archive fa-lg"></i> پیش سفارش های ثبت شده
+                  </a>
+                </li>
 
                 <li  data-toggle="collapse" data-target="#products" class="collapsed active">
                   <a href="#"><i class="fa fa-gift fa-lg"></i> UI Elements <span class="arrow"></span></a>
@@ -148,32 +153,82 @@
 <div class="col-md-6 col-md-offset-3" id="2" style="display: none;">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">ارقام</h3>
+          <h3 class="panel-title"> سفارشات</h3>
         </div>
         <div class="panel-body">
-          <form class="form-horizontal" method="POST">
+            <table class="table table-hover">
+        <thead>
+            <tr>
+        <th>سبد کالا</th>
+        <th>قیمت</th>
+        <th>سفارش دهنده</th>
+        <th>وضعیت</th>
+            </tr>
+        </thead>
+    <tbody>
+{% for order in orders %}
+<tr>
+    <td> {% for product in order.Basket.ProductList.all %}
+    {{ product}} <br/> {% endfor %}</td>
+    <td> {{order.TotalPrice}} </td>
+    <td> {{order.User}} </td>
+    <form class="form-horizontal" method="POST" action="{% url 'submitedorder' %}">
             {% csrf_token %}
-            <input type="hidden" name="requestcode" value="True" />
-            <input type="hidden" name="next" value="{{ next }}" />
-            <div class="form-group">
-              <label for="StartDate" class="col-sm-2 control-label" >از تاریخ :</label>
-              <div class="col-sm-10">
-                <input type="text" name="StartDate" class="vjDateField" size="10" required id="id_StartDate" >
-              </div>
-            </div>
+    <td> <select name="{{order.id}}">
+        <option value="ثبت سفارش" {% if order.Status == 'ثبت سفارش' %} selected {% endif %} > ثبت سفارش</option>
+        <option value="آماده سازی برای ارسال"  {% if order.Status == 'آماده سازی برای ارسال' %} selected {% endif %}> آماده سازی برای ارسال</option>
+        <option value="تحویل پست"  {% if order.Status == 'تحویل پست' %} selected {% endif %}>تحویل پست</option>
+    </select> </td>
+        <td><button type="submit" class="btn btn-default">تغییر وضعیت </button></td>
+    </form>
+</tr>
+{% endfor %}
+    </tbody>
+      </table>
+        </div>
+      </div>
+    </div>
 
-            <div class="form-group">
-              <label for="EndDate" class="col-sm-2 control-label" >تا تاریخ :</label>
-              <div class="col-sm-10">
-               <input type="text" name="EndDate" class="vjDateField" size="10" required id="id_EndDate" >
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">ایجاد گزارش</button>
-              </div>
-            </div>
-          </form>
+
+
+<div class="col-md-6 col-md-offset-3" id="3" style="display: none;">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">پیش سفارشات</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+        <thead>
+            <tr>
+        <th> کالا</th>
+        <th>قیمت</th>
+                <th>تعداد</th>
+                <th> تاریخ </th>
+        <th>سفارش دهنده</th>
+        <th>وضعیت</th>
+            </tr>
+        </thead>
+    <tbody>
+{% for order in preorders %}
+<tr>
+    <td> {{order.product}}</td>
+    <td> {{order.TotalPrice}} </td>
+     <td> {{order.Quantity}}</td>
+     <td> {{order.Date}}</td>
+    <td> {{order.User}} </td>
+    <form class="form-horizontal" method="POST" action="{% url 'submitedpreorder' %}">
+            {% csrf_token %}
+    <td> <select name="{{order.id}}">
+        <option value="در حال بررسی" {% if order.Status == 'در حال بررسی' %} selected {% endif %} > در حال بررسی</option>
+        <option value="تایید ارسال در تاریخ مورد نظر"  {% if order.Status == 'تایید ارسال در تاریخ مورد نظر' %} selected {% endif %}> تایید ارسال در تاریخ مورد نظر</option>
+        <option value="تحویل پست"  {% if order.Status == 'تحویل پست' %} selected {% endif %}>تحویل پست</option>
+    </select> </td>
+        <td><button type="submit" class="btn btn-default">تغییر وضعیت </button></td>
+    </form>
+</tr>
+{% endfor %}
+    </tbody>
+      </table>
         </div>
       </div>
     </div>

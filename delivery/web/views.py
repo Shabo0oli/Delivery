@@ -29,6 +29,8 @@ def login_view(request):
                 login(request, user)
                 context = {}
                 context['categories'] = Category.objects.all()
+                context['orders'] = Order.objects.all()
+                context['preorders'] = PreOrder.objects.all()
                 return render(request, 'panel.html', context)
             else:
                 login(request, user)
@@ -173,7 +175,10 @@ def checkout(request) :
     context={}
     basket = Basket.objects.filter(Owner=request.user, Checkout=False)[0]
     list = basket.ProductList.all()
+    for p in list :
+        ProductOfBasket.objects.filter(id=p.id).update( Quantity = int(request.POST[str(p.Product.Name)]) )
     phi = 0
+    list = basket.ProductList.all()
     for p in list:
         phi += int(p.Product.Price) * int(p.Quantity)
     order = Order(Status='ثبت سفارش' , TotalPrice=phi , User=request.user , Basket=basket)
@@ -182,7 +187,7 @@ def checkout(request) :
     basket.save()
     newbasket = Basket(Owner=request.user)
     newbasket.save()
-    return render(request, 'showbasket.html', context)
+    return myorder(request)
 
 
 def show_detail(request, productid):
@@ -194,5 +199,73 @@ def show_detail(request, productid):
         co_list = Comment.objects.filter(Product_id=p.id)
         context['comments'] = co_list
     except:
-        print(sys.exc_info())
+        pass
+        #print(sys.exc_info())
     return render(request, 'showdetail.html', context)
+
+
+def add_comment(request):
+    c = Comment()
+    c.Text = str(request.POST['comment_text'])
+    c.Author = request.user
+    c.Product = Product.objects.get(id=int(request.POST['product_id']))
+    c.Rating = 2
+
+    c.save()
+
+
+
+    return redirect('/showdetail/' + str(c.Product.id))
+
+
+
+def myorder(request) :
+    context = {}
+    context['orders'] = Order.objects.filter(User=request.user)
+    return render(request,'myorder.html' , context)
+
+def submitedorder(request):
+    for k  in request.POST :
+        if k.isdigit() :
+            Order.objects.filter(id=int(k)).update( Status = request.POST[k] )
+            order = Order.objects.get(id=int(k))
+            list = order.Basket.ProductList.all()
+            for p in list:
+                olds = Product.objects.get(id=p.Product.id).Stock
+                Product.objects.filter(id=p.Product.id).update(Stock= olds -  p.Quantity )
+
+    context = {}
+    context['categories'] = Category.objects.all()
+    context['orders'] = Order.objects.all()
+    return render(request, 'panel.html', context)
+
+def preorder(request , productid) :
+    context = {}
+    product = Product.objects.get(id = productid)
+    context['product'] = product
+    return render(request, 'preorder.html', context)
+
+def submitpreorder(request):
+    context = {}
+    productid = request.POST['productid']
+    price = int( Product.objects.get(id = productid).Price ) * int ( request.POST['quantity'] )
+    date = request.POST['date']
+    pre = PreOrder(Status= 'در دست بررسی' , TotalPrice =price , User = request.user , Quantity = int ( request.POST['quantity'] ) , Product = Product.objects.get(id = productid) , Date=date  )
+    pre.save()
+    return mypreorder()
+
+def mypreorder(request) :
+    context = {}
+    context['orders'] = PreOrder.objects.filter(User=request.user)
+    return render(request,'mypreorder.html' , context)
+
+
+def submitedpreorder(request):
+    for k  in request.POST :
+        if k.isdigit() :
+            PreOrder.objects.filter(id=int(k)).update( Status = request.POST[k] )
+    context = {}
+    context['categories'] = Category.objects.all()
+    context['orders'] = Order.objects.all()
+    context['preorders'] = PreOrder.objects.all()
+    return render(request, 'panel.html', context)

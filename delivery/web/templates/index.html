@@ -17,7 +17,13 @@
     <div class="col-sm-6 col-md-4">
 				<div class="thumbnail" >
 					<h4 class="text-center"><span class="label label-info">{{product.Name}}</span></h4>
-					<img src="http://localhost:8009/static/defaultFood.png" class="img-responsive product-image">
+					<div class="container1">
+					<img {% if product.Stock == 0 %} style="filter: grayscale(100%);" {% endif %} src="http://localhost:8009/static/defaultFood.png" class="image img-responsive product-image">
+						{% if product.Stock == 0 %} <div class="overlay">
+    <div class="text">اتمام موجودی <br/> فقط میتوانید پیش سفارش دهید</div>
+  </div>{% endif %}
+
+					</div>
 					<div class="caption">
 						<div class="row">
 							<div class="col-md-6 col-xs-6">
@@ -31,7 +37,11 @@
 						<p>تعداد : {{ product.Stock }}</p>
 						<div class="row">
 							<div class="col-md-6">
-                                <a href="http://localhost:8009/addtobasket/{{ product.id }}/" class="btn btn-success btn-product"><i class="fa fa-shopping-basket fa-lg" aria-hidden="true"></i>  اضافه به سبد خرید</a></div>
+								{% if product.Stock == 0 %}
+								<a href="http://localhost:8009/preorder/{{ product.id }}/" class="btn btn-danger btn-product"><i class="fa fa-shopping-basket fa-lg" aria-hidden="true"></i>  پیش سفارش</a></div>
+								{% else %}
+								<a href="http://localhost:8009/addtobasket/{{ product.id }}/" class="btn btn-success btn-product"><i class="fa fa-shopping-basket fa-lg" aria-hidden="true"></i>  اضافه به سبد خرید</a></div>
+								{% endif %}
                         </div>
 						   <div class="row">
 						      <div class="col-md-6">

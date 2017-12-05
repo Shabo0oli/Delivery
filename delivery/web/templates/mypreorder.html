@@ -10,34 +10,35 @@
   </div>
 </div>
 {% endif %}
-<form class="form-horizontal" method="POST" action="{% url 'checkout' %}">
-    {% csrf_token %}
+
 <div class="row">
   <div class="col-md-12">
       <table class="table table-hover">
         <thead>
             <tr>
-        <th>نام کالا</th>
-        <th>تعداد</th>
+        <th> کالا</th>
+                <th> تعداد</th>
+                <th> تاریخ</th>
+        <th>قیمت</th>
+        <th>وضعیت</th>
             </tr>
         </thead>
     <tbody>
-{% for product in basket %}
+{% for order in orders %}
 <tr>
-    <td> {{product.Product.Name}}</td>
-    <td> <input type="number" name='{{product.Product.Name}}' value="{{product.Quantity}}" > </input></td>
+    <td>
+    {{ order.Product.Name}} </td>
+    <td> {{order.Quantity}} </td>
+    <td> {{order.Date}} </td>
+    <td> {{order.TotalPrice}} </td>
+    <td> {{order.Status}} </td>
 </tr>
 {% endfor %}
-    <tr>
-        <td> قیمت</td>
-        <td> {{phi}} </td>
-    </tr>
     </tbody>
       </table>
   </div>
 </div>
-    <button type="submit" class="btn btn-default">ثبت سفارش</button>
-</form>
+
 
 {% endblock %}
 

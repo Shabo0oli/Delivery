@@ -50,10 +50,6 @@ class Basket(models.Model):
 
 
 
-
-
-
-
 class Order(models.Model):
     Status = models.CharField(max_length=30,blank=True)
     Discount = models.IntegerField(default=0)
@@ -69,7 +65,8 @@ class PreOrder(models.Model):
     TotalPrice = models.IntegerField(default=0)
     Address = models.TextField(max_length=100)
     User = models.ForeignKey(User, on_delete=models.CASCADE)
-    Basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    Quantity = models.IntegerField(default=0)
+    Product = models.ForeignKey(Product, on_delete=models.CASCADE)
     Date = models.DateField()
 
 
