@@ -252,7 +252,7 @@ def submitpreorder(request):
     date = request.POST['date']
     pre = PreOrder(Status= 'در دست بررسی' , TotalPrice =price , User = request.user , Quantity = int ( request.POST['quantity'] ) , Product = Product.objects.get(id = productid) , Date=date  )
     pre.save()
-    return mypreorder()
+    return mypreorder(request)
 
 def mypreorder(request) :
     context = {}
