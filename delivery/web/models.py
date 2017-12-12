@@ -8,6 +8,7 @@ class Client(models.Model):
     Name = models.CharField(max_length=30, blank=True)
     Family = models.CharField(max_length=30, blank=True)
     Credit = models.IntegerField(default=0)
+    isValid = models.BooleanField(default=False)
 
     def __str__(self):
         return "{}  {}".format(self.Name, self.Family)

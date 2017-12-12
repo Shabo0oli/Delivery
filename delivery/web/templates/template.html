@@ -84,6 +84,10 @@
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
+
+          .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgba(234, 190, 0, 0.55);
+}
       </style>
 
   </head>
@@ -127,7 +131,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-left">
                     {% if user.is_authenticated %}
-                    <li>  <li><a href="{% url 'mypreorder' %}">پیش سفارشات من</a></li>  <li><a href="{% url 'myorder' %}">سفارشات من</a></li>  <li><a href="{% url 'showbasket' %}">سبد خرید</a></li> <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
+                    <li> {% ifequal user.groups.all.0.name "Seller" %}  {% else %} <li><a href="{% url 'mypreorder' %}">پیش سفارشات من</a></li>  {% endifequal %}  {% ifequal user.groups.all.0.name "Seller" %}  {% else %} <li><a href="{% url 'myorder' %}">سفارشات من</a></li> {% endifequal %}  {% ifequal user.groups.all.0.name "Seller" %}  {% else %}<li><a href="{% url 'showbasket' %}">سبد خرید</a></li> {% endifequal %} <li><a href="{% url 'logout' %}">خروج</a></li><li><img id="avatar" src="http://localhost:8009/{{ request.session.studentAvatar }}" ></li>
                     {% else %}
                     <li><a href="{% url 'register' %}">ثبت نام</a></li><li><a href="{% url 'login' %}">ورود</a></li>
                     <!--<li><a href="/static/todoer_release.apk">اپ اندروید</a></li>-->
@@ -151,7 +155,7 @@
 
 
         <footer class="footer">
-
+            Zeox - Software Engineering Lab Project
         </footer>
         <!-- /.container -->
 

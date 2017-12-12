@@ -38,8 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web',
+    'django_extensions',
 ]
-
+GRAPH_MODELS = {
+    'pygraphviz': True,
+    'group_models': True,
+    'exclude_models': 'BasePasscode, AbstractBaseUser, PermissionsMixin, Group, Permission'
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

@@ -11,6 +11,12 @@ from .models import *
 def index(request):
     context = {}
     if request.user.is_authenticated():
+        users_in_group = Group.objects.get(name="Seller").user_set.all()
+        if request.user in users_in_group:
+            context['categories'] = Category.objects.all()
+            context['orders'] = Order.objects.all()
+            context['preorders'] = PreOrder.objects.all()
+            return render(request, 'panel.html', context)
         context['products'] = Product.objects.all()
         return render(request, 'index.html', context)
     else :
@@ -26,12 +32,18 @@ def login_view(request):
         if user is not None:
             users_in_group = Group.objects.get(name="Seller").user_set.all()
             if user in users_in_group :
-                login(request, user)
-                context = {}
-                context['categories'] = Category.objects.all()
-                context['orders'] = Order.objects.all()
-                context['preorders'] = PreOrder.objects.all()
-                return render(request, 'panel.html', context)
+                cl = Client.objects.get(Username=user);
+                if cl.isValid == True :
+                    login(request, user)
+                    context = {}
+                    context['categories'] = Category.objects.all()
+                    context['orders'] = Order.objects.all()
+                    context['preorders'] = PreOrder.objects.all()
+                    return render(request, 'panel.html', context)
+                else :
+                    context = {}
+                    context['message'] = 'ثبت نام شما هنوز تایید نشده است'
+                    return render(request, 'login.html', context)
             else:
                 login(request, user)
                 st = Client.objects.filter(Username=user)[0]
@@ -249,7 +261,7 @@ def submitpreorder(request):
     context = {}
     productid = request.POST['productid']
     price = int( Product.objects.get(id = productid).Price ) * int ( request.POST['quantity'] )
-    date = request.POST['date']
+    date = request.POST['Date']
     pre = PreOrder(Status= 'در دست بررسی' , TotalPrice =price , User = request.user , Quantity = int ( request.POST['quantity'] ) , Product = Product.objects.get(id = productid) , Date=date  )
     pre.save()
     return mypreorder(request)
