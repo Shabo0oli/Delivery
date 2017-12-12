@@ -1,88 +1,50 @@
 # Delivery System
 
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Delivery System is designed and made to be a utility to make startups and legacy jobs more easier to develop. No more concern about delivery and changing your old practical systems with ZeoX DELIVERY SYSTEM.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+First you need to install requirements 
 
 ```
-Give examples
+virtualenv env
+source ./env/bin/active
+pip install -r req.txt
 ```
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+next, make migrations
 
 ```
-Give the example
+python manage.py makemigrations
 ```
 
-And repeat
+and 
 
 ```
-until finished
+python manage.py migrate
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+### Run project
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+run project using following commnad 
 
 ```
-Give an example
+python manage.py runserver 8001
 ```
 
-### And coding style tests
+## Version
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+1.0.0 Beta
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+Shahab karimi (shkarimi74@gmail.com)
+alireza infotech (alireza.infotech@gmail.com)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License.
 
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
 
