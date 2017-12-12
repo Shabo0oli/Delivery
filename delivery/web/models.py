@@ -20,14 +20,18 @@ class Category(models.Model):
     def __str__(self):
         return "{}".format(self.Name)
 
+
 class Product(models.Model):
     Name = models.CharField(max_length=30, blank=True)
     Price = models.IntegerField(default=0)
     Stock = models.IntegerField(default=0)
     Detail = models.TextField(max_length=200)
     Category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
     def __str__(self):
         return "{}".format(self.Name)
+
+
 
 
 class Payment(models.Model):
